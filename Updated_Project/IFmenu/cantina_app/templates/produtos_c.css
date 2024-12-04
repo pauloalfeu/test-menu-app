@@ -1,0 +1,26 @@
+
+.meu-botao {
+    background-color: #248132; /* verde */
+    color: white;
+  }
+
+.active {
+    border-bottom: 2px solid #248132;
+}
+
+.navbar a:hover {
+    color: #248132; /* Cor das letras ao passar o mouse */
+  }
+
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Cria um espaço de 20px entre os cards */
+}
+
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribui os itens uniformemente */
+  }

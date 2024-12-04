@@ -1,0 +1,16 @@
+
+FLUXO DO USUARIO CLIENTE:
+
+[1.] A primeira tela é "login_user.html", onde o usuário poderá fazer login caso tenha uma conta, caso negativo, ele poderá se cadastrar clicando no link disponivel.
+
+	- caso o login seja feito com sucesso, é enviado para a api as credenciais do usuário, ficará armazenado no navegador (LocalStorage) um indentificador que ajuda a identificar o usuário para as atividades das telas seguintes.
+
+[2a.] Caso não o usuário cliente não possua conta, ele será levado para a tela "register.html" onde fará o cadastro conforme os requisitos apresentados na pagina. A intenção final seria de implementar uma tela de confirmação por e-mail, porém, ao efetivar o cadastro com sucesso, o usuário cliente será redirecionado para a tela [2b.] e o identificador já estará salvo na LocalStorage.
+
+[2b.] A segunda tela, caso login efetivado, é "user_products_screen.html" que é responsavel por listar todos os produtos para o usuário. É requisitado da API todos os produtos salvos no bando de dados para então mostra-los na tela. O usuário cliente pode aplicar filtros e pesquisar por um produtos específico. O usuário pode acessar outras telas pela nav bar se assim desejar.
+
+[3.] Carrinho de compras. A terceira tela do usuário está junto a tela "user_products_screen.html" onde estarão presentes todos os produtos selecionados pelo usuário cliente, feito o calculo total dos produtos o usuário pode confirmar o pedido e então será redirecionado para próxima tela.
+
+[4.] Tela de acompanhamento do pedido "user_products_screen.html", onde o usuario cliente pode acompanhar seus pedidos, o usuário pode clicar no botão para atualizar e verificar se houve alteração no status do pedido. Ao ser declarado como "Pronto" pelo usuário gerente, o cliente poderá confirmar o recebimento clicando em um botão (a ser implementado).
+
+

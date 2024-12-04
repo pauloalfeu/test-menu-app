@@ -1,0 +1,212 @@
+<html><head><base href="/" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2A5A31;
+        }
+        
+        .navbar {
+            height: 80px; /* Fixed height for navbar */
+        }
+
+        .navbar-brand img {
+            height: 50px; /* Adjust logo size */
+            width: auto;
+        }
+        
+        .nav-link.active, .nav-link:hover {
+            color: var(--primary-color) !important;
+            font-weight: bold;
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #1d4024;
+            border-color: #1d4024;
+        }
+        
+        .contact-form label {
+            color: var(--primary-color);
+        }
+        
+        .map-container {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        @media (max-width: 768px) {
+            .contact-card {
+                margin-bottom: 1rem;
+            }
+            .navbar {
+                height: auto; /* Allow navbar to expand on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="https://example.com">
+            <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/logo.png?raw=true" alt="Restaurant Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_order_status.html">Acompanhar pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_products_screen.html">Cardápio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="https://github.com/pauloalfeu/if-menu">Entrar em contato</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/payment_methods.html">Formas de Pagamento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/pauloalfeu/if-menu">Informações adicionais</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="container my-5">
+    <h1 class="text-center mb-5">Entre em Contato</h1>
+    
+    <!-- Contact Information Cards -->
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card contact-card text-center p-3">
+                <div class="card-body">
+                    <i class="fas fa-phone contact-icon"></i>
+                    <h5 class="card-title">Telefone</h5>
+                    <p class="card-text">(45) 3305-2100</p>
+                    <a href="tel:+551112345678" class="btn btn-primary">Ligar Agora</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card contact-card text-center p-3">
+                <div class="card-body">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <h5 class="card-title">E-mail</h5>
+                    <p class="card-text">contato@restaurante.com</p>
+                    <a href="mailto:contato@restaurante.com" class="btn btn-primary">Enviar E-mail</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card contact-card text-center p-3">
+                <div class="card-body">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <h5 class="card-title">Endereço</h5>
+                    <p class="card-text">Av. das Pombas, 2020 - Floresta, Cascavel/PR</p>
+                    <a href="https://maps.app.goo.gl/w38dAXx7fSBHjufNA" target="_blank" class="btn btn-primary">Ver no Mapa</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h3 class="mb-4">Envie sua Mensagem</h3>
+                <form class="contact-form" id="contactForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Mensagem</label>
+                        <textarea class="form-control" id="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h3 class="mb-4">Nossa Localização</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14473.823128489426!2d-53.4176124!3d-24.9165385!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f3d36eb28ca377%3A0x420e95ad9370e2f9!2sIFPR%20-%20Instituto%20Federal%20do%20Paran%C3%A1%20-%20Campus%20Cascavel!5e0!3m2!1spt-BR!2sbr!4v1733329108860!5m2!1spt-BR!2sbr"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    // Here you would typically send this data to your server
+    console.log('Form submitted:', { name, email, message });
+    
+    // Show success message
+    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+    
+    // Reset form
+    this.reset();
+});
+
+function logout() {
+    // Altera o valor de isLogged no localStorage para false
+    localStorage.setItem('isLogged', 'false');
+    localStorage.setItem('session_id', '');
+    // Redireciona para a página de login
+    window.location.href = 'http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html'; // Substitua 'login.html' pelo nome da sua página de login
+}
+</script>
+
+</body></html>

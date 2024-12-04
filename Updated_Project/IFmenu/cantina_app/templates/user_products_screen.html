@@ -1,0 +1,674 @@
+<html><head><base href="/">
+<title>Menu</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary-color: #2A5A31;
+}
+
+body {
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand img {
+    height: 30px;
+    width: auto;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.product-card {
+    max-width: 100%;
+    margin: 0 auto;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+    height: 120px;
+    width: 180px;
+    object-fit: cover;
+    margin: 0 auto;
+}
+
+.card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1.1rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #1f4425;
+    border-color: #1f4425;
+}
+
+.search-wrapper {
+    max-width: 600px;
+    width: 100%;
+}
+
+.search-form {
+    width: 100%;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 40px;
+    height: 40px;
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: var(--primary-color);
+}
+
+.cart-icon {
+    min-width: 40px;
+    height: 40px;
+    position: relative;
+    background: white;
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -85%;
+    width: 85%;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: right 0.3s;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.cart-sidebar.active {
+    right: 0;
+}
+
+.cart-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.cart-overlay.active {
+    display: block;
+}
+
+@media (min-width: 576px) {
+    .card-img-top {
+        height: 130px;
+        width: 190px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .navbar-brand img {
+        height: 35px;
+    }
+}
+
+@media (min-width: 768px) {
+    .product-card {
+        max-width: 240px;
+    }
+    
+    .cart-sidebar {
+        width: 300px;
+        right: -300px;
+    }
+    
+    .category-link {
+        padding: 8px 16px;
+        font-size: 1rem;
+    }
+}
+
+.category-link {
+    text-decoration: none;
+    color: #666;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    margin: 2px;
+    border-radius: 20px;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.category-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
+
+.cart-item {
+    font-size: 0.9rem;
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item h6 {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.cart-item small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+.navbar-light {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+@media (max-width: 576px) {
+    .search-wrapper {
+        max-width: none;
+    }
+    
+    .search-input {
+        font-size: 14px;
+        height: 36px;
+    }
+    
+    .cart-icon {
+        min-width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .search-input {
+        padding-left: 15px;
+        padding-right: 35px;
+    }
+    
+    .cart-icon {
+        margin-left: 10px;
+    }
+}
+
+.checkout-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1001;
+}
+
+.checkout-modal.active {
+    display: block;
+}
+
+.nav-item .nav-link i {
+    margin-right: 5px;
+}
+
+.nav-item .nav-link[href*="logout"] {
+    color: #666;
+    transition: color 0.3s;
+}
+
+.nav-item .nav-link[href*="logout"]:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 991px) {
+    .navbar-nav {
+        padding-top: 0.5rem;
+    }
+    
+    .nav-item .nav-link[href*="logout"] {
+        padding-left: 0.5rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="https://example.com">
+            <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/logo.png?raw=true" alt="Restaurant Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_order_status.html">Acompanhar pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_products_screen.html">Cardápio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/contact_page.html">Entrar em contato</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/payment_methods.html">Formas de Pagamento</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/pauloalfeu/if-menu">Informações adicionais</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-light bg-light">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="search-wrapper flex-grow-1 me-3">
+            <form class="search-form position-relative">
+                <input type="text" class="form-control search-input" id="searchInput" placeholder="O que você procura? Ex: &quot;bolo&quot;, &quot;torta&quot;, &quot;guaraná&quot;...">
+                <button type="button" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="cart-icon" id="cartIcon">
+            <i class="fas fa-shopping-cart fa-lg"></i>
+            <span class="cart-count">0</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="categories-wrapper" style="overflow-x: auto;">
+                <div class="d-flex justify-content-start flex-nowrap gap-2 pb-2">
+                    <a href="https://example.com/tudo" class="category-link active" data-category="tudo">Todos os itens</a>
+                    <a href="https://example.com/salgados" class="category-link" data-category="salgados">Salgados</a>
+                    <a href="https://example.com/doces" class="category-link" data-category="doces">Doces</a>
+                    <a href="https://example.com/bebidas" class="category-link" data-category="bebidas">Bebidas</a>
+                    <a href="https://example.com/outros" class="category-link" data-category="outros">Outros</a>
+                    <a href="https://example.com/promocao" class="category-link" data-category="promocao">Em promoção</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-container" id="productGrid">
+        <!-- Products will be dynamically loaded here -->
+    </div>
+</div>
+
+<div class="cart-overlay"></div>
+<div class="cart-sidebar">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Carrinho</h4>
+        <button class="btn-close" id="closeCart"></button>
+    </div>
+    <div id="cartItems">
+        <!-- Cart items will be dynamically loaded here -->
+    </div>
+    <div class="cart-total mt-4">
+        <h5>Total: R$<span id="cartTotal">0.00</span></h5>
+        <button class="btn btn-primary w-100" id="checkoutBtn">Fazer pedido</button>
+    </div>
+</div>
+
+<div class="checkout-modal text-center" id="checkoutModal">
+    <h5>Tudo pronto para a próxima etapa!</h5>
+    <h5>Clique em 'Confirmar' para enviar seu pedido.</h5>
+    <p>Total do pedido: R$<span id="checkoutTotal">0.00</span></p>
+    <button class="btn btn-primary" id="confirmCheckout">Confirmar</button>
+    <button class="btn btn-secondary" id="closeCheckout">Cancelar</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function logout() {
+    // Altera o valor de isLogged no localStorage para false
+    localStorage.setItem('isLogged', 'false');
+    localStorage.setItem('session_id', '');
+    // Redireciona para a página de login
+    window.location.href = 'http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html'; // Substitua 'login.html' pelo nome da sua página de login
+}
+
+const products = [];
+
+async function fetchProductsFromAPI() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/cantina_app/produtos/'); // Substitua pela URL da sua API
+      const data = await response.json();
+  
+      // Limpa o array de produtos antes de adicionar os novos dados
+      products.length = 0;
+  
+      // Adiciona os produtos da API ao array
+      products.push(...data);
+  
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      // Aqui você pode adicionar um tratamento de erro, como mostrar uma mensagem ao usuário
+    }
+  }
+  
+  // Chame a função para buscar os produtos ao carregar a página
+  fetchProductsFromAPI();
+
+let cart = [];
+let filteredProducts = [...products];
+
+function filterProducts(searchTerm = '', category = 'tudo') {
+    filteredProducts = products.filter(product => {
+        const matchesSearch = product.nome_prod.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                            product.descricao_prod.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = category === 'tudo' || product.category_prod === category;
+        return matchesSearch && matchesCategory;
+    });
+    renderProducts();
+}
+
+
+
+function renderProducts() {
+    const productGrid = document.getElementById('productGrid');
+    productGrid.innerHTML = '';
+
+    if (filteredProducts.length === 0) {
+        productGrid.innerHTML = '<div class="col-12 no-results"><h4>Selecione uma das opções acima ↑</h4></div>';
+        return;
+    }
+
+    //tentar fazer o "if = zero" buscar da API, adicionar a filteredProducts e mostar tudo
+
+    filteredProducts.forEach(product => {
+        const productCard = `
+            <div class="product-card-wrapper">
+                <div class="card product-card h-100">
+                    <img src="${product.img_prod}" class="card-img-top" alt="${product.nome_prod}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${product.nome_prod}</h5>
+                        <p class="card-text">${product.descricao_prod}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="h6 mb-0">$${product.preco_unitario}</span>
+                            <button class="btn btn-primary btn-sm" onclick="addToCart(${product.id})">
+                                Adicionar ao carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        productGrid.innerHTML += productCard;
+    });
+}
+
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    const existingItem = cart.find(item => item.id === productId);
+    
+    if (product.qtd_disp <= 0) {
+        alert('Sorry, this item is out of stock');
+        return;
+    }
+
+    if (existingItem) {
+        if (existingItem.quantity < product.qtd_disp) {
+            existingItem.quantity += 1;
+            product.qtd_disp -= 1;
+        } else {
+            alert('Maximum available quantity reached');
+            return;
+        }
+    } else {
+        cart.push({
+            ...product,
+            quantity: 1
+        });
+        product.qtd_disp -= 1;
+    }
+
+    updateCartCount();
+    renderCart();
+}
+
+function updateCartCount() {
+    const cartCount = document.querySelector('.cart-count');
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+}
+
+function renderCart() {
+    const cartItems = document.getElementById('cartItems');
+    cartItems.innerHTML = '';
+
+    cart.forEach(item => {
+        const cartItem = `
+            <div class="cart-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-0">${item.nome_prod}</h6>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">$${item.preco_unitario} x ${item.quantity}</span>
+                        <button class="btn btn-sm text-danger" onclick="removeFromCart(${item.id})">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        cartItems.innerHTML += cartItem;
+    });
+
+    updateCartTotal();
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    updateCartCount();
+    renderCart();
+}
+
+function updateCartTotal() {
+    const total = cart.reduce((sum, item) => sum + (item.preco_unitario * item.quantity), 0);
+    document.getElementById('cartTotal').textContent = total.toFixed(2);
+}
+
+document.getElementById('checkoutBtn').addEventListener('click', () => {
+    const total = cart.reduce((sum, item) => sum + (item.preco_unitario * item.quantity), 0);
+    document.getElementById('checkoutTotal').textContent = total.toFixed(2);
+    document.getElementById('checkoutModal').classList.add('active');
+});
+
+document.getElementById('confirmCheckout').addEventListener('click', () => {
+    const modal = document.createElement('div');
+    modal.className = 'modal fade show';
+    modal.style.display = 'block';
+    modal.innerHTML = `
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pedido enviado!</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Obrigado pela compra!</p>
+                    <p>Aguarde, você será redirecionado para acompanhar seu pedido...</p>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    document.body.classList.add('modal-open');
+    
+    // Clear cart and close modals
+    cart = [];
+    updateCartCount();
+    renderCart();
+    document.getElementById('checkoutModal').classList.remove('active');
+    
+    // Redirect after showing message
+    setTimeout(() => {
+        window.location.href = 'http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_order_status.html';
+    }, 2000);
+});
+
+document.getElementById('closeCheckout').addEventListener('click', () => {
+    document.getElementById('checkoutModal').classList.remove('active');
+});
+
+// Event Listeners
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    const searchTerm = e.target.value;
+    const activeCategory = document.querySelector('.category-link.active').dataset.category;
+    filterProducts(searchTerm, activeCategory);
+});
+
+document.getElementById('cartIcon').addEventListener('click', () => {
+    document.querySelector('.cart-sidebar').classList.add('active');
+    document.querySelector('.cart-overlay').classList.add('active');
+});
+
+document.getElementById('closeCart').addEventListener('click', () => {
+    document.querySelector('.cart-sidebar').classList.remove('active');
+    document.querySelector('.cart-overlay').classList.remove('active');
+});
+
+document.querySelector('.cart-overlay').addEventListener('click', () => {
+    document.querySelector('.cart-sidebar').classList.remove('active');
+    document.querySelector('.cart-overlay').classList.remove('active');
+});
+
+document.querySelectorAll('.category-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('.category-link.active').classList.remove('active');
+        link.classList.add('active');
+        const searchTerm = document.getElementById('searchInput').value;
+        filterProducts(searchTerm, link.dataset.category);
+    });
+});
+
+
+// Add touch event handling for mobile
+document.getElementById('cartIcon').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    document.querySelector('.cart-sidebar').classList.add('active');
+    document.querySelector('.cart-overlay').classList.add('active');
+});
+
+document.querySelector('.cart-overlay').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    document.querySelector('.cart-sidebar').classList.remove('active');
+    document.querySelector('.cart-overlay').classList.remove('active');
+});
+
+// Add swipe detection to close cart
+let touchStartX = 0;
+document.querySelector('.cart-sidebar').addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+});
+
+document.querySelector('.cart-sidebar').addEventListener('touchmove', (e) => {
+    const touchEndX = e.touches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    
+    if (diff < -50) { // Swipe right to close
+        document.querySelector('.cart-sidebar').classList.remove('active');
+        document.querySelector('.cart-overlay').classList.remove('active');
+    }
+});
+
+// Initial render
+renderProducts();
+</script>
+</body></html>

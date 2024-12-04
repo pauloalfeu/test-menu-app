@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Dados da API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="produtos_c.css">
+    <script src="produtos_c.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">   
+
+            <a class="navbar-brand" href="#">
+                <img src="./assets/logo2.png"   
+ alt="Logo" width="170" height="60" class="d-inline-block align-text-top">
+                
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"   
+ aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Lanches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bebidas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Biscoitos e Salgadinhos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Outros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Promoções</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- #################################### BOTAO DO CARRINHO DE COMPRAS ####################################-->
+            <button class="btn meu-botao" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">   
+
+                Carrinho (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </nav>
+
+<!-- #################################### INICIO DO CARRINHO DE COMPRAS ####################################-->
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Seu   
+Carrinho</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="cart-items">
+            </div>
+        <p>Total: <span id="cart-total">R$ 0,00</span></p>
+        <button class="btn btn-success">Finalizar Compra</button>
+    </div>
+</div>
+
+<!-- ############################ BOAS VINDAS-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Bem-vindo!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Seja bem-vindo à nossa plataforma! Aqui você poderá:</p>
+          <ul>
+            <li>Gerenciar seus dados pessoais.</li>
+            <li>Realizar compras.</li>
+            <li>Acompanhar seus pedidos.</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ############################ PRINT DOS PRODUTOS-->
+<div class="container pt-5">
+    <div   
+class="row" id="produtos">
+        </div>
+</div>
+
+<!-- ############################ FOOTER -->
+
+    <footer class="bg-body-tertiary mt-5">  <div class="container p-4">
+        <div class="row">
+          <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+            <h5 class="text-uppercase">o if menu:</h5>
+  
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+              molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+              aliquam voluptatem veniam, est atque cumque eum delectus sint!
+            </p>
+          </div>
+          <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+            <h5 class="text-uppercase">Links</h5>
+  
+            <ul class="list-unstyled mb-0">
+              <li>
+                <a href="#!" class="text-body">GitHub -- Paulo Alfeu</a>
+              </li>
+              <li>
+                <a href="#!" class="text-body">E-mail: pauloalfeu@email.com </a>
+              </li>
+              <li>
+                <a href="#!" class="text-body">GitHub -- Lucas de Oliveira</a>
+              </li>
+              <li>
+                <a href="#!" class="text-body">E-mail: lucasassmann@email.com</a>
+              </li>
+            </ul>
+
+        </div>
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2024 Link do projeto completo no GitHub:
+        <a class="text-body" href="https://github.com/pauloalfeu/if-menu">if(Menu)</a>
+      </div>
+      </footer>
+  
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

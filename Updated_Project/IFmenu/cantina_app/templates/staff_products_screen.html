@@ -1,0 +1,370 @@
+<html><head><base href="/">
+<title>Cadastro de Produtos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary-color: #2A5A31;
+}
+
+body {
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand img {
+    height: 30px;
+    width: auto;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #1e4224;
+    border-color: #1e4224;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.product-image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    margin-top: 10px;
+}
+
+.product-card {
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.edit-mode {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 10px rgba(42, 90, 49, 0.2);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .product-form {
+        padding: 1rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="https://example.com">
+            <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/logo.png?raw=true" alt="Restaurant Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/pending_orders.html">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/staff_products_screen.html">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://example.com/admin/categories">Histórico de pedidos</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html" class="nav-link" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sair</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h2>Cadastro de Produtos</h2>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="searchProduct" placeholder="Search products..." onkeyup="searchProducts()">
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Product Registration Form -->
+        <div class="col-md-4">
+            <div class="card product-form">
+                <div class="card-body">
+                    <h5 class="card-title" id="formTitle">Novo produto</h5>
+                    <form id="productForm" onsubmit="return handleSubmit(event)">
+                        <input type="hidden" name="product_id" id="product_id">
+                        <div class="mb-3">
+                            <label class="form-label">Nome:</label>
+                            <input type="text" class="form-control" name="nome_prod" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preço:</label>
+                            <input type="number" class="form-control" name="preco_unitario" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição:</label>
+                            <textarea class="form-control" name="descricao_prod" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoria:</label>
+                            <select class="form-select" name="category_prod" required>
+                                <option value="salgados">Salgados</option>
+                                <option value="doces">Doces</option>
+                                <option value="bebidas">Bebidas</option>
+                                <option value="outros">Outros</option>
+                                <option value="em promoção">Em Promoção</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Imagem do produto:</label>
+                            <input type="file" class="form-control" name="img_prod" accept="image/*" onchange="previewImage(event)" required>
+                            <img id="imagePreview" class="product-image-preview d-none">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quantidade disponível:</label>
+                            <input type="number" class="form-control" name="qtd_disp" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="submitBtn">
+                            <i class="fas fa-plus me-2"></i>Adicionar Produto
+                        </button>
+                        <button type="button" class="btn btn-secondary w-100 mt-2 d-none" id="cancelBtn" onclick="cancelEdit()">
+                            <i class="fas fa-times me-2"></i>Cancelar Edição
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product List -->
+        <div class="col-md-8">
+            <div class="row" id="productList">
+                <!-- Products will be populated here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+let products = [];
+
+async function fetchProducts() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/cantina_app/produtos/'); // Substitua pela URL da sua API
+      const data = await response.json();
+  
+      // Limpa o array de produtos antes de adicionar os novos dados
+      products.length = 0;
+  
+      // Adiciona os produtos da API ao array
+      products.push(...data);
+  
+      // Chama a função para renderizar os produtos (se você tiver uma)
+      renderProducts();
+    } catch (error) {
+      console.error('Erro ao buscar produtos:', error);
+    }
+  }
+  
+  // Chame a função para buscar os produtos ao carregar a página
+  fetchProducts();
+
+let editingId = null;
+
+function renderProducts(productsToRender = products) {
+    const productList = document.getElementById('productList');
+    productList.innerHTML = productsToRender.map(product => `
+        <div class="col-md-6 mb-4">
+            <div class="card product-card ${product.id === editingId ? 'edit-mode' : ''}">
+                <img src="${product.img_prod}" class="card-img-top" alt="${product.nome_prod}">
+                <div class="card-body">
+                    <h5 class="card-title">${product.nome_prod}</h5>
+                    <p class="card-text">${product.descricao_prod}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-primary">${product.category_prod}</span>
+                        <h6 class="mb-0">$${product.preco_unitario}</h6>
+                    </div>
+                    <div class="mt-2">
+                        <small class="text-muted">Available: ${product.qtd_disp}</small>
+                    </div>
+                    <div class="mt-3">
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="editProduct(${product.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function previewImage(event) {
+    const preview = document.getElementById('imagePreview');
+    preview.classList.remove('d-none');
+    preview.src = URL.createObjectURL(event.target.files[0]);
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    
+    if (editingId) {
+        // Update existing product
+        const index = products.findIndex(p => p.id === editingId);
+        products[index] = {
+            id: editingId,
+            nome_prod: formData.get('nome_prod'),
+            preco_unitario: parseFloat(formData.get('preco_unitario')),
+            descricao_prod: formData.get('descricao_prod'),
+            category_prod: formData.get('category_prod'),
+            img_prod: formData.get('img_prod'),
+            qtd_disp: parseInt(formData.get('qtd_disp'))
+        };
+        editingId = null;
+    } else {
+        // Add new product
+        const newProduct = {
+            nome_prod: formData.get('nome_prod'),
+            preco_unitario: parseFloat(formData.get('preco_unitario')),
+            descricao_prod: formData.get('descricao_prod'),
+            category_prod: formData.get('category_prod'),
+            img_prod: formData.get('img_prod'),
+            qtd_disp: parseInt(formData.get('qtd_disp'))
+        };
+        //products.push(newProduct);
+        
+        ////////////////////////////////////////////incluir no banco de dados aqui
+        async function createProduct(newProduct) {
+            try {
+                const formData = new FormData();
+                // Adiciona os campos como texto
+                formData.append('nome_prod', newProduct.nome_prod);
+                formData.append('preco_unitario', newProduct.preco_unitario);
+                formData.append('descricao_prod', newProduct.descricao_prod);
+                formData.append('category_prod', newProduct.category_prod);
+                formData.append('img_prod', newProduct.img_prod); // Assumindo que newProduct.img_prod é um File object
+                formData.append('qtd_disp', newProduct.qtd_disp);
+              const response = await fetch('http://127.0.0.1:8000/api/cantina_app/produtos/', {
+                method: 'POST',
+                body: formData   
+              });
+          
+              if (response.ok) {
+                console.log('Produto criado com sucesso!');
+                // Atualizar a interface do usuário ou realizar outras ações
+                fetchProducts();
+              } else {
+                console.error('Erro ao criar o produto:', await response.text());
+              }
+            } catch (error) {
+              console.error('Erro:', error);
+            }
+          }
+
+        createProduct(newProduct)
+    }
+    
+    resetForm();
+    renderProducts();
+}
+
+function editProduct(id) {
+    editingId = id;
+    const product = products.find(p => p.id === id);
+    const form = document.getElementById('productForm');
+    
+    form.elements['product_id'].value = product.id;
+    form.elements['nome_prod'].value = product.nome_prod;
+    form.elements['preco_unitario'].value = product.preco_unitario;
+    form.elements['descricao_prod'].value = product.descricao_prod;
+    form.elements['category_prod'].value = product.category_prod;
+    form.elements['qtd_disp'].value = product.qtd_disp;
+    
+    document.getElementById('formTitle').textContent = 'Edit Product';
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save me-2"></i>Atualizar Produto';
+    document.getElementById('cancelBtn').classList.remove('d-none');
+    
+    renderProducts(); // To show edit-mode styling
+}
+
+function deleteProduct(id) {
+    if (confirm('Tem certeza que deseja remover esse produto?')) {
+        products = products.filter(p => p.id !== id);
+        renderProducts();
+    }
+}
+
+function cancelEdit() {
+    editingId = null;
+    resetForm();
+    renderProducts();
+}
+
+function resetForm() {
+    const form = document.getElementById('productForm');
+    form.reset();
+    document.getElementById('imagePreview').classList.add('d-none');
+    document.getElementById('formTitle').textContent = 'Add New Product';
+    document.getElementById('submitBtn').innerHTML = '<i class="fas fa-plus me-2"></i>Add Product';
+    document.getElementById('cancelBtn').classList.add('d-none');
+}
+
+function searchProducts() {
+    const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
+    const filteredProducts = products.filter(product => 
+        product.nome_prod.toLowerCase().includes(searchTerm) ||
+        product.descricao_prod.toLowerCase().includes(searchTerm)
+    );
+    renderProducts(filteredProducts);
+}
+
+function logout() {
+    // Altera o valor de isLogged no localStorage para false
+    localStorage.setItem('isLogged', 'false');
+    localStorage.setItem('session_id', '');
+    // Redireciona para a página de login
+    window.location.href = 'http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html'; // Substitua 'login.html' pelo nome da sua página de login
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+});
+</script>
+</body></html>

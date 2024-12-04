@@ -1,0 +1,175 @@
+<html><head><base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2A5A31;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-section {
+            background-color: white;
+            padding: 2rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        .logo {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .login-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .login-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-button {
+            background-color: black !important;
+            color: white !important;
+            width: 100%;
+            padding: 10px !important;
+        }
+
+        footer {
+            background-color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-div {
+            text-align: center;
+            margin: 1rem;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-div img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-div {
+                margin: 1rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-section">
+        <img src="/a/e4ff850a-b1ab-415d-8fb1-13104bdd37e4" alt="Logo" class="logo">
+    </div>
+
+    <div class="login-container">
+        <div class="login-form">
+            <h2 class="text-center mb-4">Login</h2>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn login-button">Login</button>
+                <p class="text-center mt-3">
+                    Don't have an account? <a href="https://example.com/register">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-div">
+                <a href="https://example.com/student-login">
+                    <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/footer-icon-01.png?raw=true" alt="Student Icon">
+                    <p><strong>É aluno ou servidor?</strong><br><br>Entre e faça seu pedido agora!</p>
+                </a>
+            </div>
+            <div class="footer-div">
+                <a href="https://example.com/terms">
+                    <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/footer-icon-01.png?raw=true" alt="Info Icon">
+                    <p><strong>Saiba mais:</strong><br><br>Termos e condições de uso</p>
+                </a>
+            </div>
+            <div class="footer-div">
+                <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/footer-icon-01.png?raw=true" alt="Dev Icon">
+                <p><strong>Desenvolvido por:</strong><br><br>Paulo Alfeu Scherbai Martins<br>e Lucas Assmann</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Here you would typically make an API call to your Django backend
+            console.log('Login attempt with:', {email, password});
+            
+            // Example API call (commented out)
+            /*
+            fetch('https://your-api-endpoint/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during login.');
+            });
+            */
+        });
+    </script>
+</body></html>

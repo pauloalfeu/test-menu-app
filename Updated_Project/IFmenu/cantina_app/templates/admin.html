@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="admin.js"></script>
+</head>
+<body>
+    <header>
+        <h1><i class="fas fa-apple"></i><img src="./assets/logo.png" alt="Logo"></h1>
+    </header>
+    <main>
+        <form id="myForm" onsubmit="adminDados(event)">
+            <label for="nome">Login:</label>
+            <input type="text" id="nome" name="nome" required>
+            <br>
+            <label for="contato">Senha:</label>
+            <input type="password" id="contato" name="contato" required> <br>
+            <button type="submit">Entrar</button> <br>
+            <a href="index.html">Acessar a Area do cliente</a> 
+        </form>
+    </main>
+    <footer>
+        <div>
+            <i class="fas fa-utensils"><img src="./assets/footer-icon-01.png" alt="Logo"></i>
+            <p><strong>É aluno ou servidor?</strong><br><br>Entre e faça seu pedido agora!</p>
+        </div>
+        <div class="footer-div">
+            <i class="fas fa-info-circle"><img src="./assets/footer-icon-01.png" alt="Logo"></i>
+            <p><strong>Saiba mais:</strong> <br><br>Termos e condições de uso</p>
+        </div>
+        <div class="footer-div">
+            <i class="fas fa-code"><img src="./assets/footer-icon-01.png" alt="Logo"></i>
+            <p><strong>Desenvolvido por:</strong> <br><br>Paulo Alfeu Scherbai Martins <br>e Lucas Assmann</p>
+        </div>
+    </footer>
+</body>
+</html>

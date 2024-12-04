@@ -1,0 +1,317 @@
+<html><head><base href="/">
+<title>Meu Pedidos</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+    --primary-color: #2A5A31;
+}
+
+body {
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand img {
+    height: 30px;
+    width: auto;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+}
+
+.card {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+.progress-track {
+    margin: 15px 0;
+}
+
+.progress {
+    height: 5px;
+    background-color: #e9ecef;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    background-color: var(--primary-color);
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 5px;
+}
+
+.step.active .step-icon {
+    background: var(--primary-color);
+    color: white;
+}
+
+.step-text {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.step.active .step-text {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.badge {
+    padding: 0.5em 0.8em;
+}
+
+.order-info span {
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .step-text {
+        font-size: 0.7rem;
+    }
+    
+    .step-icon {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+}
+</style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="https://example.com">
+                <img src="https://github.com/pauloalfeu/if-menu/blob/main/ifmenu/menuapp/templates/assets/logo.png?raw=true" alt="Restaurant Logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_order_status.html">Acompanhar pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/user_products_screen.html">Cardápio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/contact_page.html">Entrar em contato</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/payment_methods.html">Formas de Pagamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/pauloalfeu/if-menu">Informações adicionais</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html" class="nav-link" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--
+    ############## TERÁ QUE AJUSTAR PARA PEGAR OS DADOS DA API E ENTAO GERAR OS CONTAINERS
+    -->
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Acompanhar Pedidos</h5>
+                <button class="btn btn-outline-primary btn-sm" onclick="updateOrderStatus()">
+                    <i class="fas fa-sync-alt me-1"></i> Atualizar
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="order-info mb-4">
+                        <h6 class="text-muted">Detalhes do Pedido</h6>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Número do Pedido:</span>
+                            <span class="fw-bold" id="orderNumber">ORD-001</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Data:</span>
+                            <span id="orderDate">December 4, 2024 18:30</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Situação:</span>
+                            <span class="badge bg-warning" id="orderStatus">Pendente</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Total do pedido:</span>
+                            <span class="fw-bold" id="orderTotal">$45.90</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="order-progress mb-4">
+                        <h6 class="text-muted">Andamento do Pedido</h6>
+                        <div class="progress-track">
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" 
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="progress-steps mt-3">
+                                <div class="step active">
+                                    <span class="step-icon">
+                                        <i class="fas fa-clipboard-check"></i>
+                                    </span>
+                                    <span class="step-text">Pedido Recebido</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </span>
+                                    <span class="step-text">Preparando</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </span>
+                                    <span class="step-text">Pronto</span>
+                                </div>
+                                <div class="step">
+                                    <span class="step-icon">
+                                        <i class="fas fa-flag-checkered"></i>
+                                    </span>
+                                    <span class="step-text">Concluído</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="order-items mt-4">
+                <h6 class="text-muted mb-3">Itens do Pedido</h6>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="orderItemsTable">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th>Subtotal</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Order items will be dynamically loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function logout() {
+    // Altera o valor de isLogged no localStorage para false
+    localStorage.setItem('isLogged', 'false');
+    localStorage.setItem('session_id', '');
+    // Redireciona para a página de login
+    window.location.href = 'http://127.0.0.1:5500/IFmenu/cantina_app/templates/login_user.html'; // Substitua 'login.html' pelo nome da sua página de login
+}
+
+function updateOrderStatus() {
+    // Simulate API call to update order status
+    const loadingToast = new bootstrap.Toast(document.createElement('div'));
+    loadingToast.show();
+    
+    setTimeout(() => {
+        // Update progress bar and status indicators
+        document.querySelector('.progress-bar').style.width = '50%';
+        document.getElementById('orderStatus').textContent = 'Preparando';
+        document.getElementById('orderStatus').className = 'badge bg-info';
+        
+        // Update step indicators
+        const steps = document.querySelectorAll('.step');
+        steps[1].classList.add('active');
+        
+        loadingToast.hide();
+    }, 1000);
+}
+
+// Sample order data - replace with actual API data
+const orderItems = [
+    {
+        name: "Hambuguer com cheddar",
+        quantity: 2,
+        price: 12.99,
+        status: "Preparando"
+    },
+    // Add more items as needed
+];
+
+function renderOrderItems() {
+    const tbody = document.querySelector('#orderItemsTable tbody');
+    tbody.innerHTML = '';
+    
+    orderItems.forEach(item => {
+        const subtotal = (item.price * item.quantity).toFixed(2);
+        const row = `
+            <tr>
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price}</td>
+                <td>$${subtotal}</td>
+                <td><span class="badge bg-info">${item.status}</span></td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+
+// Initialize the page
+document.addEventListener('DOMContentLoaded', () => {
+    renderOrderItems();
+});
+</script>
+</body></html>
